@@ -46,16 +46,17 @@ function emptyQuotesContainer(){
     quotesContainer.innerHTML = "";
 }
 
+function getPromiseArray(){
+    const promiseArray = [];
+    for(let i = 0; i < 5; i++) {
+        promiseArray.push(fetch(url).then(res => res.json()))
+    };
+    return promiseArray
+}
+
 async function fetchTasks() {
     try {
-        const quotes = await Promise.all(
-            [
-                fetch(url).then(res => res.json()),
-                fetch(url).then(res => res.json()),
-                fetch(url).then(res => res.json()),
-                fetch(url).then(res => res.json()),
-                fetch(url).then(res => res.json())
-            ])
+        const quotes = await Promise.all(getPromiseArray());
             emptyQuotesContainer()
             handleNewQuotes(quotes);
     } catch (error) {
