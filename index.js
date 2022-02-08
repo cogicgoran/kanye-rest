@@ -26,6 +26,10 @@ function updateStorage(quotesStorage, quote) {
     }
 }
 
+function updatePrevQuotes(quotes){
+    localStorage.setItem("previous-quotes",JSON.stringify(quotes));
+}
+
 function handleNewQuotes(quotes){
     const quotesString = localStorage.getItem("quotes");
     const quotesStorage = JSON.parse(quotesString) || [];
@@ -33,6 +37,7 @@ function handleNewQuotes(quotes){
     quotes.forEach(quote => {
         appendQuoteToDisplay(quote);
         updateStorage(quotesStorage, quote);
+        updatePrevQuotes(quotes)
     });
     localStorage.setItem("quotes",JSON.stringify(quotesStorage));
 }
@@ -58,6 +63,20 @@ async function fetchTasks() {
     }
 }
 
-fetchTasks();
+// Displays previous 5 quotes if this page was navigated from reports
+// Otherwise fetches 5 new quotes
+if(localStorage.getItem('page-history-prev') === 'reports') {
+    emptyQuotesContainer();
+    const previousQuotesString = localStorage.getItem("previous-quotes");
+    if(previousQuotesString) {
+        const previousQuotes = JSON.parse(previousQuotesString);
+        previousQuotes.forEach(quote => {
+            appendQuoteToDisplay(quote);
+        })
+    }
+} else {
+    fetchTasks();
+}
 
 btnFetchQuotes.addEventListener("click", fetchTasks);
+localStorage.setItem('page-history-prev', "home");
