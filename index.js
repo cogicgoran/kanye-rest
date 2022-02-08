@@ -42,10 +42,6 @@ function handleNewQuotes(quotes){
     localStorage.setItem("quotes",JSON.stringify(quotesStorage));
 }
 
-function emptyQuotesContainer(){
-    quotesContainer.innerHTML = "";
-}
-
 function getPromiseArray(){
     const promiseArray = [];
     for(let i = 0; i < 5; i++) {
@@ -57,7 +53,7 @@ function getPromiseArray(){
 async function fetchTasks() {
     try {
         const quotes = await Promise.all(getPromiseArray());
-            emptyQuotesContainer()
+        quotesContainer.innerHTML = "";
             handleNewQuotes(quotes);
     } catch (error) {
         alert("Error fetching \n",error);
@@ -67,7 +63,7 @@ async function fetchTasks() {
 // Displays previous 5 quotes if this page was navigated from reports
 // Otherwise fetches 5 new quotes
 if(localStorage.getItem('page-history-prev') === 'reports') {
-    emptyQuotesContainer();
+    quotesContainer.innerHTML = "";
     const previousQuotesString = localStorage.getItem("previous-quotes");
     if(previousQuotesString) {
         const previousQuotes = JSON.parse(previousQuotesString);

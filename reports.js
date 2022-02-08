@@ -5,7 +5,7 @@ const quotesStorage = JSON.parse(quotesString);
 
 
 // Creates DOM element for each quote
-// Each element displays quote,count,dateCreated,dateUpdated
+// Each element displays quote, count, dateCreated, dateUpdated
 quotesStorage.forEach(quote => {
     const bodyElement = document.createElement('div');
     const countElement = document.createElement('div');
@@ -16,11 +16,10 @@ quotesStorage.forEach(quote => {
     bodyElement.classList.add("quoted");
     bodyElement.textContent = quote.body;
     countElement.textContent = `Count: ${quote.count}`;
-    createdAtElement.textContent = "Created At: " + quote.createdAt.toLocaleString();
-    updatedAtElement.textContent = quote.updatedAt && "Updated At: " + quote.updatedAt.toLocaleString() || '';
+    createdAtElement.textContent = "Created At: " + new Date(quote.createdAt).toLocaleString();
+    updatedAtElement.textContent = quote.updatedAt && "Updated At: " + new Date(quote.updatedAt).toLocaleString() || '';
     quoteWrapperElement.classList.add('history__quote');
     quoteWrapperElement.append(bodyElement,countElement,createdAtElement,updatedAtElement);
-
     historyQuotesContainer.append(quoteWrapperElement);
 });
 
