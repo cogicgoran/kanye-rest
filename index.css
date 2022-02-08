@@ -26,3 +26,15 @@ header {
     border: 1px solid red;
     border-radius: 1em;
 }
+
+.history__quote > * {
+    margin: 12px 0;
+}
+
+.quoted::after {
+    content: close-quote;
+}
+
+.quoted::before {
+    content: open-quote;
+}
