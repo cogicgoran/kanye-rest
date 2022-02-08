@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+}
+
+header {
+    margin-bottom: 24px;
+}
+
+.quote {
+    margin-bottom: 1rem;
+}
+
+.quotes-container, 
+.history__quote {
+    margin-bottom: 24px;
+}
+
+.history__quote {
+    width: 400px;
+    margin: 0 auto 24px auto;
+    padding: 1rem;
+    border: 1px solid red;
+    border-radius: 1em;
+}

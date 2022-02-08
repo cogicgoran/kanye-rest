@@ -1,0 +1,7 @@
+Create a design layout with anchors, buttons, and example quotes.
+
+Create a function which fetches 5 Kanye West quotes, displays them on the page, and updates the history of quotes.
+
+On home page load, if there is no history, fetch 5 new quotes and update history.
+
+On reports page check storage for quote history
