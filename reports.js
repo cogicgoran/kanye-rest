@@ -11,6 +11,7 @@ quotesStorage.forEach(quote => {
     const countElement = document.createElement('div');
     const createdAtElement = document.createElement('div');
     const updatedAtElement = document.createElement('div');
+    const timeToFetch = document.createElement('div');
     const quoteWrapperElement = document.createElement('div');
 
     bodyElement.classList.add("quoted");
@@ -18,8 +19,9 @@ quotesStorage.forEach(quote => {
     countElement.textContent = `Count: ${quote.count}`;
     createdAtElement.textContent = "Created At: " + new Date(quote.createdAt).toLocaleString();
     updatedAtElement.textContent = quote.updatedAt && "Updated At: " + new Date(quote.updatedAt).toLocaleString() || '';
+    timeToFetch.textContent = `Time to Fetch: ${quote.time}ms`
     quoteWrapperElement.classList.add('history__quote');
-    quoteWrapperElement.append(bodyElement,countElement,createdAtElement,updatedAtElement);
+    quoteWrapperElement.append(bodyElement, countElement, createdAtElement, updatedAtElement, timeToFetch);
     historyQuotesContainer.append(quoteWrapperElement);
 });
 

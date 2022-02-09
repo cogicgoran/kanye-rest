@@ -18,54 +18,69 @@ function updateStorage(quotesStorage, quote) {
     } else {
         const newQuote = {
             body: quote.quote,
-            count:1,
-            createdAt:new Date(),
-            updatedAt:null
+            count: 1,
+            createdAt: new Date(),
+            updatedAt: null,
+            time: quote.time
         };
         quotesStorage.push(newQuote);
     }
 }
 
-function updatePrevQuotes(quotes){
-    localStorage.setItem("previous-quotes",JSON.stringify(quotes));
+function updatePrevQuotes(quotes) {
+    localStorage.setItem("previous-quotes", JSON.stringify(quotes));
 }
 
-function handleNewQuotes(quotes){
+let fetchCounter = 0;
+let fetchQuotes = [];
+
+function handleNewQuotes(quote) {
     const quotesString = localStorage.getItem("quotes");
     const quotesStorage = JSON.parse(quotesString) || [];
 
-    quotes.forEach(quote => {
-        appendQuoteToDisplay(quote);
-        updateStorage(quotesStorage, quote);
-        updatePrevQuotes(quotes)
-    });
-    localStorage.setItem("quotes",JSON.stringify(quotesStorage));
+    appendQuoteToDisplay(quote);
+    updateStorage(quotesStorage, quote);
+    fetchQuotes.push(quote);
+    fetchCounter++;
+    if (fetchCounter === 5) {
+        updatePrevQuotes(fetchQuotes);
+        fetchQuotes = [];
+        fetchCounter = 0;
+    }
+    localStorage.setItem("quotes", JSON.stringify(quotesStorage));
 }
 
-function getPromiseArray(){
+function getPromiseArray() {
     const promiseArray = [];
-    for(let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
         promiseArray.push(fetch(url).then(res => res.json()))
     };
     return promiseArray
 }
 
 async function fetchTasks() {
+    quotesContainer.innerHTML = "";
     try {
-        const quotes = await Promise.all(getPromiseArray());
-        quotesContainer.innerHTML = "";
-            handleNewQuotes(quotes);
-    } catch (error) {
-        alert("Error fetching \n",error);
+        for (let i = 0; i < 5; i++) {
+            const timeBefore = Date.now()
+            const res = await fetch(url);
+            const data = await res.json();
+            data.time = Date.now() - timeBefore;
+            handleNewQuotes(data)
+        };
     }
+    catch (error) {
+        alert(error);
+    }
+
 }
 
 // Displays previous 5 quotes if this page was navigated from reports
 // Otherwise fetches 5 new quotes
-if(localStorage.getItem('page-history-prev') === 'reports') {
+if (localStorage.getItem('page-history-prev') === 'reports') {
     quotesContainer.innerHTML = "";
     const previousQuotesString = localStorage.getItem("previous-quotes");
-    if(previousQuotesString) {
+    if (previousQuotesString) {
         const previousQuotes = JSON.parse(previousQuotesString);
         previousQuotes.forEach(quote => {
             appendQuoteToDisplay(quote);
@@ -73,7 +88,7 @@ if(localStorage.getItem('page-history-prev') === 'reports') {
     }
 } else {
     // Additional check to avoid sending an http request if there is no user
-    if (localStorage.getItem("current-user")){
+    if (localStorage.getItem("current-user")) {
         fetchTasks();
     }
 }
