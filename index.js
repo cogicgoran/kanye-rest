@@ -72,6 +72,7 @@ if(localStorage.getItem('page-history-prev') === 'reports') {
         })
     }
 } else {
+    // Additional check to avoid sending an http request if there is no user
     if (localStorage.getItem("current-user")){
         fetchTasks();
     }

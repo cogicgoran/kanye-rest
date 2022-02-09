@@ -1,3 +1,6 @@
+// Check if the user.email from localstorage exists in .json file
+// If exists, nothing happens
+// If does not exist, redirect
 async function redirectAnauthenticated() {
     try {
         const users = await fetch("/users.json").then(res => res.json());
