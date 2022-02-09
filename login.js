@@ -4,7 +4,6 @@ async function getUsers() {
     try {
         return await fetch("/users.json").then(res => res.json());
     }catch(error){
-        alert("Error fetching users");
     }
 }
 
@@ -16,17 +15,23 @@ form.addEventListener("submit", async function(event){
     event.preventDefault();
     const email = document.querySelector(".js-input-email").value;
     const password = document.querySelector(".js-input-password").value;
-
-    const users = await getUsers();
-
-    const matchedUser = users.find(user => {
-        return user.email === email && user.password === password;
-    })
-
-    if (matchedUser) {
-        localStorage.setItem('current-user',`email=${email}`);
-        window.location = "/index.html";
-    } else {
-        displayInvalidCredentialsError();
+    
+    try {
+        const users = await fetch("/users.json").then(res => res.json());
+        const matchedUser = users.find(user => {
+            return user.email === email && user.password === password;
+        })
+    
+        if (matchedUser) {
+            const storedItem = {email};
+            localStorage.setItem('current-user', JSON.stringify(storedItem));
+            window.location = "/index.html";
+        } else {
+            displayInvalidCredentialsError();
+        }
+    }catch(error) {
+        alert("Error fetching users");
     }
+
+
 });

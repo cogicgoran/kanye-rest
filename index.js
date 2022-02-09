@@ -72,7 +72,9 @@ if(localStorage.getItem('page-history-prev') === 'reports') {
         })
     }
 } else {
-    fetchTasks();
+    if (localStorage.getItem("current-user")){
+        fetchTasks();
+    }
 }
 
 btnFetchQuotes.addEventListener("click", fetchTasks);

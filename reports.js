@@ -24,4 +24,6 @@ quotesStorage.forEach(quote => {
 });
 
 
+
+
 localStorage.setItem('page-history-prev',"reports");
