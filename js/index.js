@@ -139,30 +139,30 @@ function handleNewQuotes(quote) {
 // Using both Promise.all and Promise.then for each http request
 // Displays all quotes at the same time after all the requests are done
 // Times are displayed for each request individually
-// function getPromiseArray(n = 5) {
-//     const promiseArray = [];
-//     let timeBefore = Date.now();
-//     for (let i = 0; i < n; i++) {
-//         promiseArray.push(fetch(url)
-//         .then(res => res.json())
-//         .then(quote => {
-//             const now = Date.now();
-//             quote.time = now - timeBefore;
-//             timeBefore = now;
-//             return quote;
-//         }));
-//     };
-//     return promiseArray;
-// }
+function getPromiseArray(n = 5) {
+    const promiseArray = [];
+    let timeBefore = Date.now();
+    for (let i = 0; i < n; i++) {
+        promiseArray.push(fetch(url)
+        .then(res => res.json())
+        .then(quote => {
+            const now = Date.now();
+            quote.time = now - timeBefore;
+            timeBefore = now;
+            return quote;
+        }));
+    };
+    return promiseArray;
+}
 
-// async function fetchTasks() {
-//     quotesContainer.innerHTML = "";
-//     const quotesToBeFetched = 5;
-//     const quotes = await Promise.all(getPromiseArray(quotesToBeFetched));
-//     quotes.forEach(quote => {
-//         handleNewQuotes(quote);
-//     })
-// }
+async function fetchTasks() {
+    quotesContainer.innerHTML = "";
+    const quotesToBeFetched = 5;
+    const quotes = await Promise.all(getPromiseArray(quotesToBeFetched));
+    quotes.forEach(quote => {
+        handleNewQuotes(quote);
+    })
+}
 
 
 

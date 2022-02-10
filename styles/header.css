@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70px;
+    background-color: lightcoral;
+}
+
+.btn-logout {
+    position: absolute;
+    right: 24px;
+    border: 1px solid red;
+    padding: .5em 1em;
+    background-color: lightpink;
+    border-radius: 1em;
+    cursor: pointer;
+    transition: background-color 100ms;
+}
+
+.btn-logout:hover {
+    background-color: rgb(238, 156, 168);
+}
