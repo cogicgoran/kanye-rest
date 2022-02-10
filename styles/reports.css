@@ -1,0 +1,15 @@
+.btn-remove-quotes {
+    position: fixed;
+    top: 50%;
+    right: 48px;
+    border: 1px solid red;
+    padding: .5em 1em;
+    border-radius: 1em;
+    background-color: lightpink;
+    cursor: pointer;
+    transition: background-color 100ms;
+}
+
+.btn-remove-quotes:hover {
+    background-color: rgb(238, 156, 168);
+}
