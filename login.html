@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="login.css">
-</head>
-<body>
-    <form class="login-form js-login-form">
-        <div class="login-form__field">
-            <input class="js-input-email" type="email" name="email" placeholder="example@example.com" required>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body>
+        <form class="login-form js-login-form">
+            <div class="login-form__field">
+                <input class="js-input-email" type="email" name="email" placeholder="example@example.com" required>
+            </div>
+            <div class="login-form__field">
+                <input class="js-input-password" type="password" name="password" placeholder="Password..." required>
+            </div>
+            <div>
+                <button>Sign In</button>
+            </div>
+        </form>
+        <div style="text-align: center;">
+            <pre>Try using one of these:
+                {"email": "corangoran@gmail.com", "password": "123456"},
+                {"email": "goran123@gmail.com", "password": "goran123"},
+                {"email": "email@example.com", "password": "1234567"}
+            </pre>
         </div>
-        <div class="login-form__field">
-            <input class="js-input-password" type="password" name="password" placeholder="Password..." required>
-        </div>
-        <div>
-            <button>Sign In</button>
-        </div>
-    </form>
-    <script src="login.js"></script>
-</body>
+        <script src="login.js"></script>
+    </body>
 </html>

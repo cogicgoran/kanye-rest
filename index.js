@@ -31,8 +31,10 @@ function updatePrevQuotes(quotes) {
     localStorage.setItem("previous-quotes", JSON.stringify(quotes));
 }
 
+// Keeps count on how many promises have finished from a single batch.
 let fetchCounter = 0;
 let fetchQuotes = [];
+
 
 function handleNewQuotes(quote) {
     const quotesString = localStorage.getItem("quotes");
@@ -87,7 +89,8 @@ if (localStorage.getItem('page-history-prev') === 'reports') {
         })
     }
 } else {
-    // Additional check to avoid sending an http request if there is no user
+    // By the time window.location is changed if user is unauthenticated, function fetchTask will be triggered
+    // Additional check to avoid sending that http request
     if (localStorage.getItem("current-user")) {
         fetchTasks();
     }

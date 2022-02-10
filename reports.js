@@ -1,8 +1,6 @@
 const historyQuotesContainer = document.querySelector('.js-quote-history-container');
-
 const quotesString = localStorage.getItem("quotes");
 const quotesStorage = JSON.parse(quotesString);
-
 
 // Creates DOM element for each quote
 // Each element displays quote, count, dateCreated, dateUpdated
@@ -25,7 +23,4 @@ quotesStorage.forEach(quote => {
     historyQuotesContainer.append(quoteWrapperElement);
 });
 
-
-
-
-localStorage.setItem('page-history-prev',"reports");
+localStorage.setItem('page-history-prev', "reports");
