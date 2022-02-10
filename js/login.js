@@ -10,7 +10,7 @@ form.addEventListener("submit", async function authenticateUser(event) {
     const password = document.querySelector(".js-input-password").value;
 
     try {
-        const users = await fetch("/users.json").then(res => res.json());
+        const users = await fetch("../database/users.json").then(res => res.json());
         const matchedUser = users.find(user => user.email === email && user.password === password);
 
         if (matchedUser) {

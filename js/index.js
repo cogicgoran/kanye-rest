@@ -53,7 +53,6 @@ function handleNewQuotes(quote) {
     localStorage.setItem("quotes", JSON.stringify(quotesStorage));
 }
 
-
 // // Solution 1
 // // Http requests are sent one after anothers completion
 // // Time is independant for each request
@@ -74,6 +73,7 @@ function handleNewQuotes(quote) {
 //     }
 // }
 
+
 // // Solution 2
 // // Https requests are stalled
 // // Time for each request will stack because of stalling
@@ -91,6 +91,7 @@ function handleNewQuotes(quote) {
 //             .catch(error => console.log(error));
 //     }
 // }
+
 
 // // Solution 3
 // // Https requests are stalled
@@ -135,6 +136,7 @@ function handleNewQuotes(quote) {
 //     })
 // }
 
+
 // Solution 5
 // Using both Promise.all and Promise.then for each http request
 // Displays all quotes at the same time after all the requests are done
@@ -144,13 +146,13 @@ function getPromiseArray(n = 5) {
     let timeBefore = Date.now();
     for (let i = 0; i < n; i++) {
         promiseArray.push(fetch(url)
-        .then(res => res.json())
-        .then(quote => {
-            const now = Date.now();
-            quote.time = now - timeBefore;
-            timeBefore = now;
-            return quote;
-        }));
+            .then(res => res.json())
+            .then(quote => {
+                const now = Date.now();
+                quote.time = now - timeBefore;
+                timeBefore = now;
+                return quote;
+            }));
     };
     return promiseArray;
 }
@@ -163,8 +165,6 @@ async function fetchTasks() {
         handleNewQuotes(quote);
     })
 }
-
-
 
 // Displays previous 5 quotes if this page was navigated from reports
 // Otherwise fetches 5 new quotes
