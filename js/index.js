@@ -8,8 +8,6 @@ function appendQuoteToDisplay(quote) {
     quotesContainer.append(quoteElement);
 }
 
-let quoteIdCounter = 0;
-
 function updateStorage(quotesStorage, quote) {
     const matchedQuote = quotesStorage.find(storedQuote => {
         return storedQuote.body === quote.quote;
@@ -25,7 +23,7 @@ function updateStorage(quotesStorage, quote) {
             createdAt: new Date(),
             updatedAt: null,
             time: quote.time,
-            id:quoteIdCounter++
+            id:Math.round(Math.random()*100000)
         };
         quotesStorage.push(newQuote);
     }

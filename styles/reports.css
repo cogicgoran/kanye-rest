@@ -13,3 +13,10 @@
 .btn-remove-quotes:hover {
     background-color: rgb(238, 156, 168);
 }
+
+.reports__select-all-container {
+    text-align: right;
+    position: fixed;
+    top: calc(50% - 40px);
+    right: 48px;
+}
