@@ -1,9 +1,23 @@
 const historyQuotesContainer = document.querySelector('.js-quote-history-container');
-
-// Creates DOM element for each quote
-// Each element displays quote, count, dateCreated, dateUpdated
-
 let checkedQuotes = [];
+
+localStorage.setItem('page-history-prev', "reports");
+displayAll();
+
+historyQuotesContainer.addEventListener("change", historyQuotesContainerCheckHandler);
+
+///////////////////////////////////
+
+function historyQuotesContainerCheckHandler(event) {
+    const quoteId = event.target.closest(".history__quote").dataset.id;
+    if (event.target.checked) {
+        checkedQuotes.push(quoteId);
+    } else {
+        document.querySelector('.js-reports-select-all').checked = false;
+        checkedQuotes.splice(checkedQuotes.indexOf(checkedQuotes.find(id => quoteId === id)), 1);
+    }
+    updateDisplayRemoveButton();
+}
 
 function createCheckbox() {
     const checkBox = document.createElement('input');
@@ -14,8 +28,7 @@ function createCheckbox() {
 
 function displayAll() {
     historyQuotesContainer.innerHTML = "";
-    const quotesString = localStorage.getItem("quotes");
-    const quotesStorage = JSON.parse(quotesString);
+    const quotesStorage = JSON.parse(localStorage.getItem("quotes"));
 
     quotesStorage.forEach(quote => {
         const bodyElement = document.createElement('div');
@@ -39,21 +52,19 @@ function displayAll() {
         historyQuotesContainer.append(quoteWrapperElement);
     });
 
-    if(quotesStorage && quotesStorage.length > 0 && !document.querySelector('.js-reports-select-all')){
+    if (quotesStorage && quotesStorage.length > 0 && !document.querySelector('.js-reports-select-all')) {
         displayCheckboxSelectAll();
-    }else if(( !quotesStorage || (quotesStorage.length === 0)) && document.querySelector('.js-reports-select-all')){
+    } else if ((!quotesStorage || (quotesStorage.length === 0)) && document.querySelector('.js-reports-select-all')) {
         removeCheckboxSelectAll();
     }
 }
 
-displayAll();
-
-function removeCheckboxSelectAll(){
+function removeCheckboxSelectAll() {
     document.querySelector('.js-reports-select-all').removeEventListener("change", checkboxSelectAllChangeHandler);
     document.querySelector('.js-reports-select-all-container').remove();
 }
 
-function displayCheckboxSelectAll(){
+function displayCheckboxSelectAll() {
     const container = document.createElement('div');
     const label = document.createElement('label');
     const input = document.createElement('input');
@@ -61,7 +72,7 @@ function displayCheckboxSelectAll(){
 
     container.classList.add('reports__select-all-container');
     container.classList.add('js-reports-select-all-container');
-    label.setAttribute('for','reports-select-all');
+    label.setAttribute('for', 'reports-select-all');
     label.textContent = 'Select All';
     input.classList.add('reports__select-all');
     input.classList.add('js-reports-select-all');
@@ -75,7 +86,7 @@ function displayCheckboxSelectAll(){
     checkboxWrapper.append(container);
 }
 
-function checkboxSelectAllChangeHandler(event){
+function checkboxSelectAllChangeHandler(event) {
     const allCheckboxes = document.querySelectorAll(".js-report-checkbox");
     checkedQuotes = [];
     if (event.target.checked) {
@@ -92,44 +103,21 @@ function checkboxSelectAllChangeHandler(event){
     }
 }
 
-
-// checkboxSelectAll.addEventListener("change", function (event) {
-    
-// });
-
-{/* <div class="reports__select-all-container">
-                <label for="reports-select-all">Select All</label>
-                <br>
-                <input class="reports__select-all js-reports-select-all" type="checkbox" name="reports-select-all">
-            </div> */}
-
-
-historyQuotesContainer.addEventListener("change", function (event) {
-    const quoteId = event.target.closest(".history__quote").dataset.id;
-    if (event.target.checked) {
-        checkedQuotes.push(quoteId);
-    } else {
-        checkboxSelectAll.checked = false;
-        checkedQuotes.splice(checkedQuotes.indexOf(checkedQuotes.find(id => quoteId === id)), 1);
-    }
-    updateDisplayRemoveButton();
-})
-
-function checkboxRemoveQuoteHandler() {
+function btnRemoveQuotesClickHandler() {
     document.querySelector('.js-reports-select-all').checked = false;
     const quotes = JSON.parse(localStorage.getItem('quotes'));
     checkedQuotes.forEach(checkedQuoteId => {
-        const res = quotes.splice(quotes.indexOf(quotes.find(quote=>{
+        quotes.splice(quotes.indexOf(quotes.find(quote => {
             return quote.id == checkedQuoteId;
-        })),1);
+        })), 1);
     });
 
     localStorage.setItem("quotes", JSON.stringify(quotes));
     displayAll();
     checkedQuotes = [];
-    const thisButton = document.querySelector('.js-btn-remove-quotes');
-    thisButton.removeEventListener("click", checkboxRemoveQuoteHandler);
-    thisButton.remove();
+    const btnRemoveQuotes = document.querySelector('.js-btn-remove-quotes');
+    btnRemoveQuotes.removeEventListener("click", btnRemoveQuotesClickHandler);
+    btnRemoveQuotes.remove();
 }
 
 function updateDisplayRemoveButton() {
@@ -143,7 +131,7 @@ function updateDisplayRemoveButton() {
         button = document.createElement('button');
         button.classList.add("btn-remove-quotes");
         button.classList.add("js-btn-remove-quotes");
-        button.addEventListener("click", checkboxRemoveQuoteHandler);
+        button.addEventListener("click", btnRemoveQuotesClickHandler);
         buttonContainer.append(button);
     }
     button.innerHTML = `Remove Quotes <br> (${checkedQuotes
@@ -151,4 +139,3 @@ function updateDisplayRemoveButton() {
 }
 
 
-localStorage.setItem('page-history-prev', "reports");
