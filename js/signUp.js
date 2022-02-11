@@ -1,6 +1,5 @@
 const formRegister = document.querySelector(".form-register");
 const exampleDate = [{email:'a', password:'a'}]
-const users = JSON.parse(localStorage.getItem('users')) || [];
 
 formRegister.addEventListener("submit", formRegisterSubmitHandler);
 
@@ -10,27 +9,29 @@ function formRegisterSubmitHandler(event){
     const email = document.querySelector('.js-register-input-email').value;
     const password = document.querySelector('.js-register-input-password').value;
     const passwordConfirm = document.querySelector('.js-register-input-password-confirm').value;
+    const users = JSON.parse(localStorage.getItem('users')) || [];
     
     try{
         // Will throw error if inputs are invalid
-        validateInputs(email, password, passwordConfirm);
+        validateInputs(email, password, passwordConfirm, users);
         users.push({email, password});
+        localStorage.setItem('current-user', JSON.stringify({email}));
         localStorage.setItem('users', JSON.stringify(users));
+        window.location.href = "/index.html";
         
     }catch(error){
         alert(error.message);
     }
-    
 }
 
-function validateInputs(email, password, passwordConfirm){
-    validateEmailExists(email);
+function validateInputs(email, password, passwordConfirm, users){
+    validateEmailExists(email, users);
     validatePassword(password);
     validateConfirmPassword(password, passwordConfirm);
 }
 
 // TODO check if good enough
-function validateEmailExists(email){
+function validateEmailExists(email, users){
     const regExpSimpleEmail = /\S+@\S+\.\S+/;
     if (!regExpSimpleEmail.test(email)) {
         throw new Error("Invalid email");
