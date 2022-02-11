@@ -175,7 +175,7 @@ if (KanyeDatabase.getPageHistory() === 'reports') {
         if (previousQuotes && previousQuotes.length > 0) {
             previousQuotes.forEach(quote => {
                 appendQuoteToDisplay(quote);
-            })
+            });
         }
 
     }

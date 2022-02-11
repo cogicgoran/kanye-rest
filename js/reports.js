@@ -44,7 +44,7 @@ function displayAll() {
         countElement.textContent = `Count: ${quote.count}`;
         createdAtElement.textContent = "Created At: " + new Date(quote.createdAt).toLocaleString();
         updatedAtElement.textContent = quote.updatedAt && "Updated At: " + new Date(quote.updatedAt).toLocaleString() || '';
-        timeToFetch.textContent = `Time to Fetch: ${quote.time}ms`
+        timeToFetch.textContent = "Time to Fetch: " + (quote.time ? `${quote.time}ms` : "Unknown");
         quoteWrapperElement.classList.add('history__quote');
         quoteWrapperElement.dataset.id = quote.id;
         quoteWrapperElement.append(bodyElement, countElement, createdAtElement, updatedAtElement, timeToFetch, checkbox);

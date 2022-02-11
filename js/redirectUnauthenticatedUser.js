@@ -9,12 +9,6 @@ async function redirectAnauthenticated() {
         if (!currentUser) {
             return window.location = "/login.html";
         }
-        const foundUser = users.find(user => {
-            return user.email === currentUser.email
-        });
-        if (!foundUser) {
-            window.location = "/login.html";
-        }
     } catch (error) {
         console.log(error)
         alert("Error fetching users");
