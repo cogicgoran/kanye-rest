@@ -28,10 +28,17 @@
 }
 
 .form-register__btn-confirm {
+    padding: .5em 1em;
+    border-radius: 1em;
+    border: 2px solid rgb(248, 150, 133);
+    cursor: pointer;
+    transition: background-color 200ms;
+}
 
+.form-register__btn-confirm:hover {
+    background-color: rgb(248, 150, 133);
 }
 
 .form-error-validator {
     color: red;
-    /* margin-bottom: 44px; */
 }
