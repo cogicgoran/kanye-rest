@@ -2,8 +2,8 @@
     width: 500px;
     margin: 0 auto;
     padding: 1em;
-    border: 2px solid tomato;
-    background-color: lightcoral;
+    border: 2px solid rgb(248, 150, 133);
+    background-color: rgb(235, 190, 190);
     border-radius: 1em;
 }
 
@@ -29,4 +29,9 @@
 
 .form-register__btn-confirm {
 
+}
+
+.form-error-validator {
+    color: red;
+    /* margin-bottom: 44px; */
 }
