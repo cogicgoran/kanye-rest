@@ -163,7 +163,6 @@ async function fetchTasks() {
 
 // Displays previous 5 quotes if this page was navigated from reports
 // Otherwise fetches 5 new quotes
-console.log(KanyeDatabase.getPageHistory())
 if (KanyeDatabase.getPageHistory() === 'reports') {
     quotesContainer.innerHTML = "";
     const previousQuotes = KanyeDatabase.getPreviousQuotes();
@@ -175,10 +174,10 @@ if (KanyeDatabase.getPageHistory() === 'reports') {
 } else {
     // By the time window.location is changed if user is unauthenticated, function fetchTask will be triggered
     // Additional check to avoid sending that http request
-    if (localStorage.getItem("current-user")) {
+    if (KanyeDatabase.getCurrentUser()) {
         fetchTasks();
     }
 }
 
 btnFetchQuotes.addEventListener("click", fetchTasks);
-localStorage.setItem('page-history-prev', "home");
+KanyeDatabase.setPageHistory("home");

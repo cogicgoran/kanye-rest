@@ -1,6 +1,6 @@
 const btnSignOut = document.querySelector('.js-btn-logout');
 
 btnSignOut.addEventListener("click", function signOutClickHandler(){
-    localStorage.removeItem('current-user');
+    KanyeDatabase.removeCurrentUser();
     window.location.href = "/login.html";
 });

@@ -5,21 +5,18 @@ formRegister.addEventListener("submit", formRegisterSubmitHandler);
 
 function formRegisterSubmitHandler(event){
     event.preventDefault();
-    
     const email = document.querySelector('.js-register-input-email').value;
     const password = document.querySelector('.js-register-input-password').value;
     const passwordConfirm = document.querySelector('.js-register-input-password-confirm').value;
-    // const users = JSON.parse(localStorage.getItem('users')) || [];
     const users = KanyeDatabase.getUsers();
     
     try{
         // Will throw error if inputs are invalid
         validateInputs(email, password, passwordConfirm, users);
         users.push({email, password});
-        localStorage.setItem('current-user', JSON.stringify({email}));
-        localStorage.setItem('users', JSON.stringify(users));
+        KanyeDatabase.setCurrentUser(email);
+        KanyeDatabase.setUsers(users)
         window.location.href = "/index.html";
-        
     }catch(error){
         alert(error.message);
     }

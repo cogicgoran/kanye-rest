@@ -1,7 +1,7 @@
 const historyQuotesContainer = document.querySelector('.js-quote-history-container');
 let checkedQuotes = [];
 
-localStorage.setItem('page-history-prev', "reports");
+KanyeDatabase.setPageHistory("reports")
 displayAll();
 
 historyQuotesContainer.addEventListener("change", historyQuotesContainerCheckHandler);
@@ -28,7 +28,7 @@ function createCheckbox() {
 
 function displayAll() {
     historyQuotesContainer.innerHTML = "";
-    const quotesStorage = JSON.parse(localStorage.getItem("quotes"));
+    const quotesStorage = KanyeDatabase.getQuotes();
 
     quotesStorage.forEach(quote => {
         const bodyElement = document.createElement('div');
@@ -37,7 +37,6 @@ function displayAll() {
         const updatedAtElement = document.createElement('div');
         const timeToFetch = document.createElement('div');
         const checkbox = createCheckbox();
-
         const quoteWrapperElement = document.createElement('div');
 
         bodyElement.classList.add("quoted");
@@ -105,14 +104,14 @@ function checkboxSelectAllChangeHandler(event) {
 
 function btnRemoveQuotesClickHandler() {
     document.querySelector('.js-reports-select-all').checked = false;
-    const quotes = JSON.parse(localStorage.getItem('quotes'));
+    const quotes = KanyeDatabase.getQuotes();
     checkedQuotes.forEach(checkedQuoteId => {
         quotes.splice(quotes.indexOf(quotes.find(quote => {
             return quote.id == checkedQuoteId;
         })), 1);
     });
 
-    localStorage.setItem("quotes", JSON.stringify(quotes));
+    KanyeDatabase.setQuotes(quotes)
     displayAll();
     checkedQuotes = [];
     const btnRemoveQuotes = document.querySelector('.js-btn-remove-quotes');

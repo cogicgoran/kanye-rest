@@ -1,10 +1,9 @@
-// Check if the user.email from localstorage exists in .json file
+// Checks if current user in localStorage exists in users
 // If exists, nothing happens
 // If does not exist, redirect
 
 async function redirectAnauthenticated() {
     try {
-        // const users = await fetch("../database/users.json").then(res => res.json());
         const users = KanyeDatabase.getUsers();
         const currentUser = KanyeDatabase.getCurrentUser();
         if (!currentUser) {
