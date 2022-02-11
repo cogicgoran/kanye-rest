@@ -16,6 +16,8 @@ function updateStorage(quotesStorage, quote) {
         matchedQuote.count = matchedQuote.count + 1;
         matchedQuote.time = quote.time;
         matchedQuote.updatedAt = new Date();
+        return matchedQuote
+
     } else {
         const newQuote = {
             body: quote.quote,
@@ -23,9 +25,10 @@ function updateStorage(quotesStorage, quote) {
             createdAt: new Date(),
             updatedAt: null,
             time: quote.time,
-            id:Math.round(Math.random()*100000)
+            id: Math.round(Math.random() * 100000)
         };
         quotesStorage.push(newQuote);
+        return newQuote;
     }
 }
 
@@ -37,8 +40,8 @@ function handleNewQuotes(quote) {
     const quotesStorage = KanyeDatabase.getQuotes();
 
     appendQuoteToDisplay(quote);
-    updateStorage(quotesStorage, quote);
-    fetchQuotes.push(quote);
+    const updatedQuote = updateStorage(quotesStorage, quote);
+    fetchQuotes.push({ quote: updatedQuote.body, id: updatedQuote.id });
     fetchCounter++;
     if (fetchCounter === 5) {
         KanyeDatabase.setPreviousQuotes(fetchQuotes);
@@ -165,11 +168,16 @@ async function fetchTasks() {
 // Otherwise fetches 5 new quotes
 if (KanyeDatabase.getPageHistory() === 'reports') {
     quotesContainer.innerHTML = "";
-    const previousQuotes = KanyeDatabase.getPreviousQuotes();
-    if (previousQuotes && previousQuotes.length > 0) {
-        previousQuotes.forEach(quote => {
-            appendQuoteToDisplay(quote);
-        })
+    if (KanyeDatabase.getQuotes().length < 5) {
+        fetchTasks();
+    } else {
+        const previousQuotes = KanyeDatabase.getPreviousQuotes();
+        if (previousQuotes && previousQuotes.length > 0) {
+            previousQuotes.forEach(quote => {
+                appendQuoteToDisplay(quote);
+            })
+        }
+
     }
 } else {
     // By the time window.location is changed if user is unauthenticated, function fetchTask will be triggered

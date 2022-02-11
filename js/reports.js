@@ -105,10 +105,23 @@ function checkboxSelectAllChangeHandler(event) {
 function btnRemoveQuotesClickHandler() {
     document.querySelector('.js-reports-select-all').checked = false;
     const quotes = KanyeDatabase.getQuotes();
+    const last5Quotes = KanyeDatabase.getPreviousQuotes();
     checkedQuotes.forEach(checkedQuoteId => {
         quotes.splice(quotes.indexOf(quotes.find(quote => {
             return quote.id == checkedQuoteId;
         })), 1);
+
+        const item = last5Quotes.find(item => {
+            return item.id == checkedQuoteId;
+        })
+
+        const id = last5Quotes.indexOf(item);
+
+        if (id !== -1) {
+            last5Quotes.splice(id, 1);
+            KanyeDatabase.setPreviousQuotes(last5Quotes);
+        }
+
     });
 
     KanyeDatabase.setQuotes(quotes)
