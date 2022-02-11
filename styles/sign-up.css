@@ -1,0 +1,32 @@
+.form-register {
+    width: 500px;
+    margin: 0 auto;
+    padding: 1em;
+    border: 2px solid tomato;
+    background-color: lightcoral;
+    border-radius: 1em;
+}
+
+.form-register__input {
+    margin-bottom: 16px;
+    font-size: 18px;
+}
+
+.form-register__input label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+}
+
+.form-register__input label::after {
+    content: ":";
+}
+
+.form-register__input input {
+    width: 26ch;
+    font-size: 20px;
+}
+
+.form-register__btn-confirm {
+
+}
