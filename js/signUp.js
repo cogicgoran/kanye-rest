@@ -9,7 +9,8 @@ function formRegisterSubmitHandler(event){
     const email = document.querySelector('.js-register-input-email').value;
     const password = document.querySelector('.js-register-input-password').value;
     const passwordConfirm = document.querySelector('.js-register-input-password-confirm').value;
-    const users = JSON.parse(localStorage.getItem('users')) || [];
+    // const users = JSON.parse(localStorage.getItem('users')) || [];
+    const users = KanyeDatabase.getUsers();
     
     try{
         // Will throw error if inputs are invalid

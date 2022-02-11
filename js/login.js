@@ -10,8 +10,12 @@ form.addEventListener("submit", async function authenticateUser(event) {
     const password = document.querySelector(".js-input-password").value;
 
     try {
-        const users = await fetch("../database/users.json").then(res => res.json());
-        const matchedUser = users.find(user => user.email === email && user.password === password);
+        // const users = await fetch("../database/users.json").then(res => res.json());
+        // const users = KanyeDatabase.getUsers();
+        
+        console.log(users);
+        // const matchedUser = users.find(user => user.email === email && user.password === password);
+        const matchedUser = KanyeDatabase.findUserByEmailAndPassword(email, password)
 
         if (matchedUser) {
             const storedItem = { email };
