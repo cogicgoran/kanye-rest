@@ -6,7 +6,7 @@ async function redirectAnauthenticated() {
     try {
         // const users = await fetch("../database/users.json").then(res => res.json());
         const users = KanyeDatabase.getUsers();
-        const currentUser = JSON.parse(localStorage.getItem('current-user'));
+        const currentUser = KanyeDatabase.getCurrentUser();
         if (!currentUser) {
             return window.location = "/login.html";
         }

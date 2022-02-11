@@ -29,29 +29,23 @@ function updateStorage(quotesStorage, quote) {
     }
 }
 
-function updatePrevQuotes(quotes) {
-    localStorage.setItem("previous-quotes", JSON.stringify(quotes));
-}
-
 // Keeps count on how many promises have finished from a single batch.
 let fetchCounter = 0;
 let fetchQuotes = [];
 
-
 function handleNewQuotes(quote) {
-    const quotesString = localStorage.getItem("quotes");
-    const quotesStorage = JSON.parse(quotesString) || [];
+    const quotesStorage = KanyeDatabase.getQuotes();
 
     appendQuoteToDisplay(quote);
     updateStorage(quotesStorage, quote);
     fetchQuotes.push(quote);
     fetchCounter++;
     if (fetchCounter === 5) {
-        updatePrevQuotes(fetchQuotes);
+        KanyeDatabase.setPreviousQuotes(fetchQuotes);
         fetchQuotes = [];
         fetchCounter = 0;
     }
-    localStorage.setItem("quotes", JSON.stringify(quotesStorage));
+    KanyeDatabase.setQuotes(quotesStorage);
 }
 
 // // Solution 1
@@ -169,11 +163,11 @@ async function fetchTasks() {
 
 // Displays previous 5 quotes if this page was navigated from reports
 // Otherwise fetches 5 new quotes
-if (localStorage.getItem('page-history-prev') === 'reports') {
+console.log(KanyeDatabase.getPageHistory())
+if (KanyeDatabase.getPageHistory() === 'reports') {
     quotesContainer.innerHTML = "";
-    const previousQuotesString = localStorage.getItem("previous-quotes");
-    if (previousQuotesString) {
-        const previousQuotes = JSON.parse(previousQuotesString);
+    const previousQuotes = KanyeDatabase.getPreviousQuotes();
+    if (previousQuotes && previousQuotes.length > 0) {
         previousQuotes.forEach(quote => {
             appendQuoteToDisplay(quote);
         })
