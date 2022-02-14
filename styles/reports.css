@@ -20,3 +20,7 @@
     top: calc(50% - 40px);
     right: 48px;
 }
+
+.hidden {
+    display: none;
+}

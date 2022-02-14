@@ -1,9 +1,12 @@
 const historyQuotesContainer = document.querySelector('.js-quote-history-container');
 let checkedQuotes = [];
+const checkboxSelectAll = document.querySelector(".js-reports-select-all");
+const checkboxSelectAllContainer = document.querySelector('.js-reports-select-all-container');
 
-KanyeDatabase.setPageHistory("reports")
+KanyeDatabase.setPageHistory("reports");
 displayAll();
 
+checkboxSelectAll.addEventListener("change", checkboxSelectAllChangeHandler);
 historyQuotesContainer.addEventListener("change", historyQuotesContainerCheckHandler);
 
 ///////////////////////////////////
@@ -52,37 +55,10 @@ function displayAll() {
     });
 
     if (quotesStorage && quotesStorage.length > 0 && !document.querySelector('.js-reports-select-all')) {
-        displayCheckboxSelectAll();
+        checkboxSelectAllContainer.classList.remove("hidden");
     } else if ((!quotesStorage || (quotesStorage.length === 0)) && document.querySelector('.js-reports-select-all')) {
-        removeCheckboxSelectAll();
+        checkboxSelectAllContainer.classList.add("hidden");
     }
-}
-
-function removeCheckboxSelectAll() {
-    document.querySelector('.js-reports-select-all').removeEventListener("change", checkboxSelectAllChangeHandler);
-    document.querySelector('.js-reports-select-all-container').remove();
-}
-
-function displayCheckboxSelectAll() {
-    const container = document.createElement('div');
-    const label = document.createElement('label');
-    const input = document.createElement('input');
-    const breakElement = document.createElement('br');
-
-    container.classList.add('reports__select-all-container');
-    container.classList.add('js-reports-select-all-container');
-    label.setAttribute('for', 'reports-select-all');
-    label.textContent = 'Select All';
-    input.classList.add('reports__select-all');
-    input.classList.add('js-reports-select-all');
-    input.setAttribute('type', 'checkbox');
-    input.setAttribute('name', 'reports-select-all');
-
-    input.addEventListener("change", checkboxSelectAllChangeHandler)
-
-    container.append(label, breakElement, input);
-    const checkboxWrapper = document.querySelector('.js-quote-history-wrapper');
-    checkboxWrapper.append(container);
 }
 
 function checkboxSelectAllChangeHandler(event) {
@@ -110,43 +86,34 @@ function btnRemoveQuotesClickHandler() {
         quotes.splice(quotes.indexOf(quotes.find(quote => {
             return quote.id == checkedQuoteId;
         })), 1);
-
         const item = last5Quotes.find(item => {
             return item.id == checkedQuoteId;
         })
-
         const id = last5Quotes.indexOf(item);
-
         if (id !== -1) {
             last5Quotes.splice(id, 1);
             KanyeDatabase.setPreviousQuotes(last5Quotes);
         }
-
     });
 
     KanyeDatabase.setQuotes(quotes)
     displayAll();
     checkedQuotes = [];
-    const btnRemoveQuotes = document.querySelector('.js-btn-remove-quotes');
-    btnRemoveQuotes.removeEventListener("click", btnRemoveQuotesClickHandler);
-    btnRemoveQuotes.remove();
+    displayButton.classList.add("hidden");
 }
 
+const displayButton = document.querySelector('.js-btn-remove-quotes');
+displayButton.addEventListener("click", btnRemoveQuotesClickHandler);
+
 function updateDisplayRemoveButton() {
-    var button = document.querySelector('.js-btn-remove-quotes');
     if (checkedQuotes.length === 0) {
-        button.remove(button);
+        displayButton.classList.add("hidden");
         return;
     }
-    if (checkedQuotes.length > 0 && !button) {
-        const buttonContainer = document.querySelector('.js-quote-history-wrapper');
-        button = document.createElement('button');
-        button.classList.add("btn-remove-quotes");
-        button.classList.add("js-btn-remove-quotes");
-        button.addEventListener("click", btnRemoveQuotesClickHandler);
-        buttonContainer.append(button);
+    if (checkedQuotes.length > 0) {
+        displayButton.classList.remove("hidden");
     }
-    button.innerHTML = `Remove Quotes <br> (${checkedQuotes
+    displayButton.innerHTML = `Remove Quotes <br> (${checkedQuotes
         .length} items selected)`;
 }
 
