@@ -4,12 +4,8 @@ formRegister.addEventListener("submit", formRegisterSubmitHandler);
 formRegister.addEventListener("focusin", formRegisterFocusInHandler);
 ////////////////////////////////////////////
 
-function clearErrors() {
-    document.querySelectorAll('.form-error-validator').forEach(el => el.remove());
-}
-
 function formRegisterFocusInHandler(event) {
-    clearErrors();
+    document.querySelectorAll('.form-error-validator').forEach(el => el.remove());
 }
 
 function formRegisterSubmitHandler(event) {
